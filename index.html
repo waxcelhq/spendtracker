@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#1A73E8" />
+    <meta name="robots" content="noindex" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Spend Tracker" />
+    <title>SpendTracker</title>
+    <script>
+      (function () {
+        try {
+          var mode = localStorage.getItem('spend-tracker-mode') || 'system'
+          var dark = localStorage.getItem('spend-tracker-color-scheme-dark') || 'dark'
+          var light = localStorage.getItem('spend-tracker-color-scheme-light') || 'light'
+          var colorScheme = mode
+          if (mode === 'system') {
+            colorScheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? dark : light
+          }
+          if (mode === 'light') colorScheme = light
+          if (mode === 'dark') colorScheme = dark
+          var root = document.documentElement
+          root.removeAttribute('data-light')
+          root.removeAttribute('data-dark')
+          if (colorScheme) root.setAttribute('data-' + colorScheme, '')
+        } catch (e) {}
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
